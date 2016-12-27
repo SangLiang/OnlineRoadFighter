@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<style>
+.wrapper { width: 800px; height: 300px; margin: 0 auto; background: #333; padding-top: 100px; margin-top: 150px;}
+
+.join{ width: 400px; height: 40px; margin-left: 300px; }
+.build{ width: 400px; height: 40px; margin-left: 300px;}
+.result{ color: #fff; text-align: center;}
+</style>
+
+
+<body>
+    <div class="wrapper">
+        <div class="join">
+            <input type="text" placeholder="please input you room code">
+            <input type="button" value="join room">
+        </div>
+
+        <div class="build">
+            <input type="text" placeholder="pleace input you id" id="build-text">
+            <input type="button" value="bulid room" id="build-button">
+        </div>
+
+        <h1 class="result">
+            <span class="notice">RoomCode</span>
+            <span class="text">123123213</span>
+        </h1>
+        
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="public/js/jquery.1.11.3.min.js"></script>
+    <script src="public/js/login.js"></script>
+</body>
+
+</html>

@@ -5,26 +5,23 @@
  * engine version:Hamster-v0.0.1
  * date:2016-12－24
  */
+Hamster.init("main", 800, 600, null, "#000");
 
-Hamster.init("main", 800, 600);
-var BackGround = Hamster.sprite({
-    "name": "BackGround",
-    "imageName": "background",
+// 闪屏logo
+var flash = Hamster.sprite({
+    "name": "flash",
+    "imageName": "flash",
     "x": "0",
     "y": "0"
 });
+Hamster.add(flash);
 
-BackGround.setSize(100,100);
+flash.setSize(178, 100);
+flash.scale(3, 3);
+flash.x = 130;
+flash.y = 110;
+console.log(flash);
 
-Hamster.add(BackGround);
-
-Hamster.addEventListener(BackGround, "keyDown", function (e) {
+Hamster.addEventListener(flash, "keyDown", function(e) {
     console.log(e.code);
 });
-
-var time = setTimeout(function () {
-    Hamster.remove(BackGround);
-}, 1000);
-
-// console.log(Hamster);
-
