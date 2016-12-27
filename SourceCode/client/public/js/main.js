@@ -64,7 +64,7 @@
   Hamster.add(hero1);
   Hamster.add(hero2);
 
-  Hamster.addEventListener(hero1,"keyDown",function(e){
+  Hamster.addEventListener(hero1,"keyUp",function(e){
       if(e.code == "KeyW"){
           hero1.y-=3;
       }

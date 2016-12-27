@@ -11,7 +11,7 @@
 window.Hamster = window.Hamster || {};
 
 Hamster.spriteList = [];
-Hamster.uiList = [];   
+Hamster.uiList = [];
 
 Hamster.ctx = null;         //main canvas context
 Hamster.timeloop = null;    //main gameloop
@@ -19,8 +19,6 @@ Hamster.gameWidth = null;   //the game stage width
 Hamster.gameHeight = null;  //the game stage height
 
 Hamster.spriteId = 0; 
-
-Hamster.timeList = []; // time object list
 /**
  * main canvas,canvas data setting
  * @id {id}
@@ -330,7 +328,6 @@ Hamster.remove = function (obj) {
 			return;
 		}
 	}
-
 }
 
 // 清楚某个tag
@@ -424,7 +421,7 @@ Hamster.addEventListener = function (obj, eventName, callback) {
 	if (eventName == "click") {
 		obj.onClick = callback;
 	}
-	if (eventName == "keyDown") {
+	if (eventName == "keyDown" || eventName == "keyUp" || eventName == "keyPress") {
 		sys.keyEvent(callback, eventName);
 	}
 }
