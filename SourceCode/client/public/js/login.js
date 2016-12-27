@@ -15,8 +15,8 @@ Login.prototype.init = function() {
         $(".result .text").text("Connect Sucess!");
     });
 
+    // 创建游戏房间
     $("#build-button").click(function() {
-        console.log($("#build-text").val().length );
         if ($("#build-text").val().length <= 0) {
             $(".result .notice").text("ERROR");
             $(".result .text").text("Please Input Your ID");
@@ -27,21 +27,27 @@ Login.prototype.init = function() {
         console.log(1);
     });
 
-    self.socket.on("loginSuccess",function(passCode){
-         $(".result .text").text(passCode);
+    self.socket.on("loginSuccess", function(passCode) {
+        $(".result .text").text(passCode);
     });
 
-    self.socket.on("nickExisted",function(){
+    self.socket.on("nickExisted", function() {
         $(".result .text").text("Nickname is existed");
     });
 
+    // 通过passcode加入游戏
+    $("#join-button").click(function() {
+        if ($("#join-text").val().length <= 0) {
+            $(".result .notice").text("ERROR");
+            $(".result .text").text("Pass Code Wrong");
+        } else {
+            self.socket.emit("addRoom",$("#join-text").val());
+        }
+    });
+
+    self.socket.on("addSuccess",function(){
+        $(".result .text").text("Wait For Another Player");
+    });
+
     
-
-
-}
-
-// build room
-Login.prototype.BuildRoom = function() {
-    var self = this;
-    // self.
 }
