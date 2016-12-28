@@ -30,10 +30,6 @@ Login.prototype.init = function () {
         $(".result .text").text(passCode);
     });
 
-    self.socket.on("nickExisted", function () {
-        $(".result .text").text("Nickname is existed");
-    });
-
     // 通过passcode加入游戏
     $("#join-button").click(function () {
         if ($("#join-text").val().length <= 0) {
@@ -51,6 +47,7 @@ Login.prototype.init = function () {
     self.socket.on("gameStart", function (position) {
         window.player = position;
         $(".wrapper").fadeOut();
+        $("#main").fadeIn();
         var game = new GameLogic(self.socket);
 
     });

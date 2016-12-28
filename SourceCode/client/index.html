@@ -1,14 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Road Fighter</title>
+    <title>Login</title>
 </head>
+<style>
+    .wrapper {
+        width: 800px;
+        height: 300px;
+        margin: 0 auto;
+        background: #333;
+        padding-top: 100px;
+        margin-top: 50px;
+    }
+    
+    .join {
+        width: 400px;
+        height: 40px;
+        margin-left: 300px;
+    }
+    
+    .build {
+        width: 400px;
+        height: 40px;
+        margin-left: 300px;
+    }
+    
+    .result {
+        color: #fff;
+        text-align: center;
+    }
+</style>
+
+
 <body>
     <h1 style="text-align: center;">Road Fighter</h1>
-    <canvas id="main">
-        
-    </canvas>
+
+    <canvas id="main" style="display: none;"></canvas>
+    <div class="wrapper">
+        <div class="join">
+            <input type="text" placeholder="please input you room code" id="join-text">
+            <input type="button" value="join room" id="join-button">
+        </div>
+
+        <div class="build">
+            <input type="text" placeholder="pleace input you id" id="build-text">
+            <input type="button" value="bulid room" id="build-button">
+        </div>
+
+        <h1 class="result">
+            <span class="notice">error</span>
+            <span class="text">connect faild</span>
+        </h1>
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="public/js/jquery.1.11.3.min.js"></script>
     <!--配置文件-->
     <script src="public/js/config.js"></script>
     <!--引擎库-->
@@ -16,4 +64,5 @@
     <!--用户代码-->
     <script src="public/js/main.js"></script>
 </body>
+
 </html>

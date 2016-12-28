@@ -3,7 +3,6 @@ var app = express();
 var server = require("http").createServer(app);
 var io = require("socket.io").listen(server);
 
-var userList = [];
 var passCodeList = [];
 var gamePlayer = 0;
 app.use("/", express.static(__dirname + "/client"));
@@ -12,21 +11,20 @@ server.listen(3000, function () {
 });
 
 io.on("connection", function (socket) {
+    if (passCodeList.length > 2) {
+        return;
+    }
+
     socket.on("login", function (nickname) {
+
         var randomCode = 0;
-        if (userList.indexOf(nickname) != -1) {
-            socket.emit("nickExisted");
-        } else {
-            randomCode = Math.floor(Math.random() * 10000);
-            socket.emit("loginSuccess", randomCode);
-            socket.randomCode = randomCode;
-            passCodeList.push(randomCode);
-        }
+        randomCode = Math.floor(Math.random() * 10000);
+        socket.emit("loginSuccess", randomCode);
+        passCodeList.push(randomCode);
 
     });
     // 离线事件广播
     socket.on("disconnect", function () {
-        userList = [];
         passCodeList = [];
         gamePlayer = 0;
         socket.broadcast.emit("refresh");
@@ -34,8 +32,13 @@ io.on("connection", function (socket) {
     });
 
     socket.on("addRoom", function (passCode) {
+        console.log(passCodeList.length);
 
+        if (passCodeList.length > 2) {
+            return;
+        }
         if (passCodeList.indexOf(parseInt(passCode)) != -1) {
+            passCodeList.push(passCode);
             socket.emit("addSuccess");
             gamePlayer++;
             if (gamePlayer == 1) {
@@ -45,7 +48,6 @@ io.on("connection", function (socket) {
             } else {
                 socket.position = "wrong";
             }
-            // socket.emit("myposiTion", socket.position);
             if (gamePlayer == 2) {
                 console.log("达到了两个玩家哟");
                 socket.emit("gameStart", socket.position);
