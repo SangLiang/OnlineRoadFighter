@@ -29,7 +29,7 @@ io.on("connection", function (socket) {
         userList = [];
         passCodeList = [];
         gamePlayer = 0;
-
+        socket.broadcast.emit("refresh");
         console.log("玩家离线");
     });
 
@@ -59,6 +59,10 @@ io.on("connection", function (socket) {
 
     socket.on("position1",function(position1){
         socket.broadcast.emit("position1Fresh",position1);
+    });
+
+    socket.on("position2",function(position2){
+        socket.broadcast.emit("position2Fresh",position2);
     });
 
 });

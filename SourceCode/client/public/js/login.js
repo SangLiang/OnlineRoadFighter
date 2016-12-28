@@ -138,6 +138,12 @@ GameLogic.prototype.init = function (socket) {
         }
     });
 
+    socket.on("position2Fresh", function (position2) {
+        if (window.player == "1p") {
+            hero2.y = position2;
+        }
+    });
+
     Hamster.addEventListener(hero1, "keyUp", function (e) {
         if (e.code == "KeyW") {
             if (window.player == "1p") {
@@ -146,8 +152,13 @@ GameLogic.prototype.init = function (socket) {
 
             } else if (window.player == "2p") {
                 hero2.y -= 3;
+                socket.emit("position2", hero2.y);
             }
         }
+    });
+
+    socket.on("refresh", function () {
+        location.reload();
     });
 
 }
