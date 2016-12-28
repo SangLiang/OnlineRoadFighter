@@ -24,7 +24,7 @@ io.on("connection", function (socket) {
         }
 
     });
-
+    // 离线事件广播
     socket.on("disconnect", function () {
         userList = [];
         passCodeList = [];
@@ -35,10 +35,7 @@ io.on("connection", function (socket) {
 
     socket.on("addRoom", function (passCode) {
 
-        if (passCodeList.indexOf(parseInt(passCode)) == -1) {
-            console.log(passCode);
-            console.log(passCodeList);
-        } else {
+        if (passCodeList.indexOf(parseInt(passCode)) != -1) {
             socket.emit("addSuccess");
             gamePlayer++;
             if (gamePlayer == 1) {
@@ -57,12 +54,24 @@ io.on("connection", function (socket) {
         }
     });
 
-    socket.on("position1",function(position1){
-        socket.broadcast.emit("position1Fresh",position1);
+    socket.on("position1", function (position1) {
+        socket.broadcast.emit("position1Fresh", position1);
+        if (position1 <= 50) {
+            var result = "1p";
+            socket.emit("gameOver", result);
+            socket.broadcast.emit("gameOver", result);
+        }
+
     });
 
-    socket.on("position2",function(position2){
-        socket.broadcast.emit("position2Fresh",position2);
+    socket.on("position2", function (position2) {
+        socket.broadcast.emit("position2Fresh", position2);
+        if (position2 <= 50) {
+            var result = "2p";
+            socket.broadcast.emit("gameOver", result);
+            socket.emit("gameOver", result);
+        }
+
     });
 
 });

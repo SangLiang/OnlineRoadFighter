@@ -24,7 +24,6 @@ Login.prototype.init = function () {
             var nickName = $("#build-text").val();
             self.socket.emit("login", nickName);
         }
-        console.log(1);
     });
 
     self.socket.on("loginSuccess", function (passCode) {
@@ -49,14 +48,9 @@ Login.prototype.init = function () {
         $(".result .text").text("Wait For Another Player");
     });
 
-    // self.socket.on("myposiTion",function(pos){
-    //     console.log(pos);
-    // });
-
     self.socket.on("gameStart", function (position) {
         window.player = position;
         $(".wrapper").fadeOut();
-        console.log(position);
         var game = new GameLogic(self.socket);
 
     });
@@ -72,7 +66,6 @@ function GameLogic(socket) {
 }
 
 GameLogic.prototype.init = function (socket) {
-    console.log(socket);
     Hamster.init("main", 800, 600, null, "#000");
 
     // 闪屏logo
@@ -132,6 +125,26 @@ GameLogic.prototype.init = function (socket) {
     Hamster.add(hero1);
     Hamster.add(hero2);
 
+    // 玩家信息
+    var playerInfo = Hamster.UI.Text({
+        "text": "You are " + window.player,
+        "color": "#ffffff",
+        "fontSize": "18"
+    });
+    playerInfo.x = 20;
+    playerInfo.y = 50;
+    Hamster.add(playerInfo);
+
+    // 提示
+    var noticeText = Hamster.UI.Text({
+        "text": "按键盘'W'让小车前进，率先到达终点获胜",
+        "color": "#ffffff",
+        "fontSize": "18"
+    });
+    noticeText.x = 20;
+    noticeText.y = 20;
+    Hamster.add(noticeText);
+
     socket.on("position1Fresh", function (position1) {
         if (window.player == "2p") {
             hero1.y = position1;
@@ -147,18 +160,25 @@ GameLogic.prototype.init = function (socket) {
     Hamster.addEventListener(hero1, "keyUp", function (e) {
         if (e.code == "KeyW") {
             if (window.player == "1p") {
-                hero1.y -= 3;
+                hero1.y -= 9;
+
                 socket.emit("position1", hero1.y);
 
             } else if (window.player == "2p") {
-                hero2.y -= 3;
+                hero2.y -= 9;
                 socket.emit("position2", hero2.y);
             }
         }
     });
 
+    // 玩家断线
     socket.on("refresh", function () {
         location.reload();
+    });
+
+    socket.on("gameOver", function (result) {
+        alert(result + "is the Winner");
+        Hamster.removeAll();
     });
 
 }
