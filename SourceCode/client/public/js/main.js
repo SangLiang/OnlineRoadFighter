@@ -19,7 +19,7 @@ Login.prototype.init = function () {
     $("#build-button").click(function () {
         if ($("#build-text").val().length <= 0) {
             $(".result .notice").text("ERROR");
-            $(".result .text").text("Please Input Your ID");
+            $(".result .text").text("Please Input Your nickName");
         } else {
             var nickName = $("#build-text").val();
             self.socket.emit("login", nickName);

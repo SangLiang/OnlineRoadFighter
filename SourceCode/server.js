@@ -32,11 +32,7 @@ io.on("connection", function (socket) {
     });
 
     socket.on("addRoom", function (passCode) {
-        console.log(passCodeList.length);
-
-        if (passCodeList.length > 2) {
-            return;
-        }
+        
         if (passCodeList.indexOf(parseInt(passCode)) != -1) {
             passCodeList.push(passCode);
             socket.emit("addSuccess");
